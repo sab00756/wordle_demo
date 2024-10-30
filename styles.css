@@ -1,0 +1,239 @@
+body {
+    background-color: black;
+    position: relative;
+}
+
+.heading {
+    margin-left: 625px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-block;
+    font-size: 29px;
+    font-weight: bolder;
+    color: white;
+    text-align: center;
+    letter-spacing: .2rem;
+}
+
+hr {
+    width: 480px;
+    color: #3a3a3c;
+    opacity: 30%;
+}
+
+svg {
+    opacity: 80%;
+}
+
+.svg_info {
+    margin-right: 80px;
+    margin-left: -80px;
+}
+
+.svg_stats {
+    margin-left: 60px;
+    margin-right: -60px;
+}
+
+.svg_setting {
+    margin-left: 80px;
+    margin-right: -80px;
+}
+
+.keyboard {
+    margin-left: 390px;
+    font-family: Arial, Helvetica, sans-serif;
+    justify-content: center;
+    align-items: center;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.keyboard-row {
+    margin-left: 220px;
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-bottom: 8px;
+}
+
+.key {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #121213;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.key:active,
+.key-mismatch:active,
+.key-dark:active,
+.key-exact:active {
+    background-color: white;
+}
+
+.key-mismatch {
+    transform: 0.6s;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #b59f3b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.key-dark {
+    transform: 0.6s;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #3a3a3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.key-exact {
+    transform: 0.6s;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #538d4e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+
+.inputs {
+    margin-left: 540px;
+    margin-top: 30px;
+    display: block;
+    grid-template-columns: repeat(5, 60px);
+    /* Five columns for each row */
+    grid-gap: 5px;
+    /* Space between the boxes */
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.input1,
+.input2,
+.input3,
+.input4,
+.input5,
+.input6 {
+    display: inline-block;
+    text-align: center;
+    /* Ensure each row uses the grid layout */
+}
+
+.card {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    margin: 5px;
+}
+
+.card.is-flipped {
+    transform: rotateX(-180deg);
+}
+
+.original,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 33px;
+    text-transform: uppercase;
+    border: 2px solid #3a3a3c;
+}
+
+.original {
+    background-color: #121213;
+    text-align: center;
+    color: white;
+}
+
+.back {
+
+    background-color: #3a3a3c;
+    text-align: center;
+    color: white;
+    transform: rotateX(180deg);
+}
+
+.form-popup {
+    display: none;
+    position: fixed;
+    margin-top: 200px;
+    margin-left: 475px;
+    top: 0;
+    background-color: #121213;
+}
+
+
+.form-container {
+    width: 530px;
+    height: 375px;
+    background-color: #121213;
+}
+canvas{
+    margin-top: 40px;
+    margin-left: 60px;
+}
+#myForm {
+    opacity: 0;
+    transform: translateY(-20px);
+    display: none;
+    transition: all 0.3s ease-in-out;
+}
+
+#myForm.active {
+    opacity: 1;
+    transform: translateY(0);
+    display: block;
+}
+
+.form-container .cancel {
+    background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover,
+.open-button:hover {
+    opacity: 1;
+}
+
+.form-container h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bolder;
+    color: white;
+}
