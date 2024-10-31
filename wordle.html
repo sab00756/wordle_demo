@@ -2,57 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="378728634389-ggf3hbl7vj8u8ic6399cu4o2ncjstn6e.apps.googleusercontent.com">
-    <title>General OAuth Flow with Google Sign-In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google OAuth Login Test</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-</head>
-<body>
-    <!-- Google Sign-In Button -->
-    <div id="g_id_onload"
-         data-client_id="YOUR_GOOGLE_CLIENT_ID"
-         data-context="signin"
-         data-ux_mode="popup"
-         data-flow="GeneralOAuthFlow"
-         data-callback="handleCredentialResponse">
-    </div>
-    <div class="g_id_signin" data-type="standard"></div>
-    
-    <!-- Logout Button -->
-    <button id="logoutButton" style="display:none;" onclick="logout()">Logout</button>
-
     <script>
         function handleCredentialResponse(response) {
-            const idToken = response.credential; // ID Token returned by Google
-            console.log("ID Token: " + idToken);
-
-            // Hide the Google Sign-In button and show the Logout button
-            document.querySelector(".g_id_signin").style.display = "none";
-            document.getElementById("logoutButton").style.display = "inline";
-
-            // You can now send this token to your server for verification
-            // e.g., send it via fetch or XMLHttpRequest
-            /*
-            fetch('/your-server-endpoint', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ idToken: idToken })
-            }).then(response => response.json()).then(data => {
-                console.log(data);
-            });
-            */
+            console.log("Encoded JWT ID token: " + response.credential);
         }
-
-        function logout() {
-            google.accounts.id.disableAutoSelect();
-            
-            // Show the Google Sign-In button and hide the Logout button
-            document.querySelector(".g_id_signin").style.display = "inline";
-            document.getElementById("logoutButton").style.display = "none";
-
-            console.log("User logged out");
+        
+        function initializeGSI() {
+            google.accounts.id.initialize({
+                client_id: "378728634389-ggf3hbl7vj8u8ic6399cu4o2ncjstn6e.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("buttonDiv"),
+                { theme: "outline", size: "large" }
+            );
+            google.accounts.id.prompt();
         }
     </script>
+</head>
+<body onload="initializeGSI()">
+    <h1>Google OAuth Login Test</h1>
+    <div id="buttonDiv"></div>
 </body>
 </html>
