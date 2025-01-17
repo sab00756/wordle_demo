@@ -4,6 +4,7 @@ import re
 
 
 app = Flask(__name__)
+app.run(host="0.0.0.0", port=5000)
 
 def db_conn():
     conn = psycopg2.connect(database="wordle",host="gallantly-musical-protozoa.data-1.use1.tembo.io",user="postgres",password="7UbYBsumz2tpclgT",port="5432")
