@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google OAuth Login Test</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function handleCredentialResponse(response) {
+            // Parse the ID token to access user information.
+            const token = response.credential;
+            const payload = JSON.parse(atob(token.split('.')[1])); // Decode the JWT payload
+            console.log("User ID: " + payload.sub);
+            console.log("Name: " + payload.name);
+            console.log("Image URL: " + payload.picture);
+            console.log("Email: " + payload.email);
+        }
+
+        function initializeGSI() {
+            google.accounts.id.initialize({
+                client_id: "378728634389-ggf3hbl7vj8u8ic6399cu4o2ncjstn6e.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("buttonDiv"),
+                { theme: "outline", size: "large" }
+            );
+            google.accounts.id.prompt(); // Optional: to prompt login automatically
+        }
+    </script>
+</head>
+<body onload="initializeGSI()">
+    <h1>Google OAuth Login Test</h1>
+    <div id="buttonDiv"></div>
+</body>
+</html>
