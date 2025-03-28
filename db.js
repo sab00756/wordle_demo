@@ -1,4 +1,4 @@
-const { Client } = require('pg');
+import { Client } from 'pg';
 
 const client = new Client({
   user: 'postgres',
@@ -14,15 +14,23 @@ client.connect()
   .catch(err => console.error('Connection error:', err.message));
 
 async function executeQuery() {
+  let word = null;
   try {
-    const result = await client.query('select getword(\'test_user\');'); // Change your_table_name
-    const word = result.rows[0]?.getword;  // Safely accessing word from the first result
-    console.log('Query Result:', word);  // Output the word
+    const result = await client.query('select getword(\'test_user\');');
+    word = result.rows[0]?.getword;  // Safely accessing word from the first result
+    console.log('Query Result:', word);
   } catch (err) {
     console.error('Query Error:', err.message);
   } finally {
     client.end(); // Close the connection after query execution
   }
+  return word;
 }
 
-executeQuery();
+// Using an async function to assign the result to window.targetword
+async function fetchTargetWord() {
+  window.targetword = await executeQuery();
+  console.log('Word from database:', window.targetword);
+}
+
+fetchTargetWord();
