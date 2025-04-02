@@ -1,36 +1,28 @@
-import { Client } from 'pg';
+const { Client } = require('pg');
 
-const client = new Client({
-  user: 'postgres',
-  host: 'thickly-choice-kookaburra.data-1.use1.tembo.io',
-  database: 'postgres',
-  password: 'FbBzogv9yzTOwbJm',
-  port: 5432,
-  ssl: { rejectUnauthorized: false } // Required for Tembo.io
-});
+export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
 
-client.connect()
-  .then(() => console.log('Connected to PostgreSQL on Tembo.io'))
-  .catch(err => console.error('Connection error:', err.message));
+  const client = new Client({
+    user: 'postgres',
+    host: 'thickly-choice-kookaburra.data-1.use1.tembo.io',
+    database: 'postgres',
+    password: 'FbBzogv9yzTOwbJm',
+    port: 5432,
+    ssl: { rejectUnauthorized: false },
+  });
 
-async function executeQuery() {
-  let word = null;
   try {
-    const result = await client.query('select getword(\'test_user\');');
-    word = result.rows[0]?.getword;  // Safely accessing word from the first result
-    console.log('Query Result:', word);
+    await client.connect();
+    const result = await client.query("SELECT getword('test_user');");
+    const word = result.rows[0]?.getword;
+    await client.end();
+    
+    res.json({ word });
   } catch (err) {
     console.error('Query Error:', err.message);
-  } finally {
-    client.end(); // Close the connection after query execution
+    res.status(500).json({ error: 'Failed to fetch word' });
   }
-  return word;
 }
-
-// Using an async function to assign the result to window.targetword
-async function fetchTargetWord() {
-  window.targetword = await executeQuery();
-  console.log('Word from database:', window.targetword);
-}
-
-fetchTargetWord();
